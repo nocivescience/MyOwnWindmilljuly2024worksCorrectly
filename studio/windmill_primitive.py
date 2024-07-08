@@ -14,18 +14,20 @@ class Windmill2Points(Scene):
 
         # Estado inicial
         current_pivot = [points[0]]
+        rotation_speed = 0.5  # Ajusta la velocidad de rotación según sea necesario
 
         def update_line(line, dt):
             # Rotar la línea alrededor del pivote actual
-            line.rotate(dt * PI / 2, about_point=current_pivot[0])
+            line.rotate(dt * PI * rotation_speed, about_point=current_pivot[0])
             # Verificar si la línea cruza el segundo punto
             if np.array_equal(current_pivot[0], points[0]):
-                if np.linalg.norm(line.get_start() - points[1]) < 0.1 or np.linalg.norm(line.get_end() - points[1]) < 0.1:
+                if np.linalg.norm(line.get_center() - points[1]) < 0.1:
                     current_pivot[0] = points[1]
             elif np.array_equal(current_pivot[0], points[1]):
-                if np.linalg.norm(line.get_start() - points[0]) < 0.1 or np.linalg.norm(line.get_end() - points[0]) < 0.1:
+                if np.linalg.norm(line.get_center() - points[0]) < 0.1:
                     current_pivot[0] = points[0]
 
         line.add_updater(update_line)
         self.wait(10)
         line.remove_updater(update_line)
+
