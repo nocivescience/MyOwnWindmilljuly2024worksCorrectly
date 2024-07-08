@@ -14,11 +14,7 @@ class Windmill2Points(Scene):
 
         # Estado inicial
         current_pivot = [points[0]]
-        
-        angle0 = angle_of_vector(points[0])
-        angle1 = angle_of_vector(points[1])
-        
-        
+
         def update_line(line, dt):
             # Rotar la línea alrededor del pivote actual
             line.rotate(dt * PI / 2, about_point=current_pivot[0])
